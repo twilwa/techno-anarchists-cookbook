@@ -89,7 +89,7 @@ class TestRedditNewsletter(unittest.TestCase):
         expected_prompt = "Generate an engaging newsletter based on the following Reddit posts and comments:\n\n"
         expected_prompt += "Post 1: Test Post 1 (https://test1.com)\nScore: 100\nNumber of Comments: 50\n"
         expected_prompt += "Comment 1: Test Comment 1 (Score: 10)\nComment 2: Test Comment 2 (Score: 5)\n\n"
-        expected_prompt += "Post 2: Test Post 2 (https://test2.com)\nScore: 200\nNumber of Comments: 80\n"
+        expected_prompt += "Post 2: Test Post 2 (https://test3.com)\nScore: 200\nNumber of Comments: 80\n"
         expected_prompt += "Comment 1: Test Comment 3 (Score: 15)\nComment 2: Test Comment 4 (Score: 8)\n\n"
         mock_openai_completion.assert_called_once_with(prompt=expected_prompt)
     
