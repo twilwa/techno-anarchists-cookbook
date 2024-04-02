@@ -1,9 +1,10 @@
 from dagster import Definitions, load_assets_from_modules
-
-from . import assets
-
-all_assets = load_assets_from_modules([assets])
+from .assets import reddit_posts 
+from .resources import reddit_resource# Assuming this is the module with your assets
 
 defs = Definitions(
-    assets=all_assets,
+    assets=load_assets_from_modules([reddit_posts]),  # Note the list brackets
+    resources={
+        "reddit_client": reddit_resource.reddit_client_resource,
+    },
 )

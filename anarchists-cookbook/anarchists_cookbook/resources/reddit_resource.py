@@ -1,22 +1,28 @@
-import os
-from dagster import ConfigurableResource
-from dotenv import load_dotenv
+from pydantic import BaseModel
+from dagster import resource, Field, StringSource
 import praw
 
-load_dotenv()
+class RedditClientConfig(BaseModel):
+    client_id: str
+    client_secret: str
+    user_agent: str
+    username: str
+    password: str
 
-class RedditResource(ConfigurableResource):
-    client_id: str = os.getenv("REDDIT_CLIENT_ID")
-    client_secret: str = os.getenv("REDDIT_CLIENT_SECRET") 
-    user_agent: str = "scrapeyboi"
-    username: str = os.getenv("REDDIT_USERNAME")
-    password: str = os.getenv("REDDIT_PASSWORD")
-
-    def client(self):
-        return praw.Reddit(
-            client_id=self.client_id,
-            client_secret=self.client_secret,
-            user_agent=self.user_agent,
-            username=self.username,
-            password=self.password,
-        )
+@resource({
+    "client_id": Field(StringSource),
+    "client_secret": Field(StringSource),
+    "user_agent": Field(StringSource),
+    "username": Field(StringSource),
+    "password": Field(StringSource),
+})
+def reddit_client_resource(init_context):
+    config = RedditClientConfig(**init_context.resource_config)
+    # Initialize the praw Reddit client with the config
+    return praw.Reddit(
+        client_id=config.client_id,
+        client_secret=config.client_secret,
+        user_agent=config.user_agent,
+        username=config.username,
+        password=config.password,
+    )

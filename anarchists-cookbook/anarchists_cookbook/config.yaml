@@ -1,0 +1,12 @@
+resources:
+  reddit_client:
+    config:
+      client_id:
+        env: REDDIT_CLIENT_ID
+      client_secret:
+        env: REDDIT_CLIENT_SECRET
+      user_agent: "your_user_agent"
+      username:
+        env: REDDIT_USERNAME
+      password:
+        env: REDDIT_PASSWORD
